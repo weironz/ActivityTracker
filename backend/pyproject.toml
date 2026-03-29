@@ -1,0 +1,26 @@
+[project]
+name = "activity-tracker"
+version = "0.1.0"
+description = "Kafka 活动追踪系统 - 后端服务"
+requires-python = ">=3.12"
+dependencies = [
+    "flask==3.0.0",
+    "flask-cors==4.0.0",
+    "kafka-python-ng",
+    "six",
+    "python-dotenv",
+]
+
+[project.scripts]
+activity-tracker-app = "activity_tracker.app:app"
+activity-tracker-consumer = "activity_tracker.consumer:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/activity_tracker"]

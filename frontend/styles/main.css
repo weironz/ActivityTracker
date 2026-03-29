@@ -1,0 +1,181 @@
+/* ShopTrack 主样式文件 */
+
+:root {
+  --bg: #0e0e0e;
+  --surface: #1a1a1a;
+  --border: #2a2a2a;
+  --accent: #e8c547;
+  --accent2: #ff6b35;
+  --text: #f0ede8;
+  --muted: #888;
+  --card-bg: #161616;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Serif SC', serif;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(14,14,14,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+
+.logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.1rem; font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.logo span { color: var(--text); }
+
+nav { display: flex; gap: 2rem; }
+
+nav a {
+  color: var(--muted); text-decoration: none;
+  font-size: 0.85rem; letter-spacing: 0.08em;
+  transition: color 0.2s;
+}
+
+nav a:hover { color: var(--text); }
+
+/* Hero Section */
+.hero {
+  padding: 4rem 2rem 3rem;
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: flex-end; gap: 1rem;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero-sub {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-family: 'Space Mono', monospace;
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* Filter Bar */
+.filter-bar {
+  max-width: 1200px; margin: 0 auto 2rem;
+  padding: 0 2rem;
+  display: flex; gap: 0.75rem; flex-wrap: wrap;
+  align-items: center;
+}
+
+.search-box {
+  flex: 1;
+  max-width: 300px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.4rem 1rem 0.4rem 2.2rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.search-input::placeholder {
+  color: var(--muted);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 0.8rem;
+  pointer-events: none;
+}
+
+.filter-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(232,197,71,0.05);
+}
+
+/* Product Grid */
+.grid {
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 2rem 4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5px;
+}
+
+/* Event Log */
+.event-log {
+  position: fixed; bottom: 0; left: 0; right: 300px;
+  height: 120px;
+  background: rgba(14,14,14,0.95);
+  border-top: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  overflow-y: auto;
+  z-index: 40;
+}
+
+.event-log .log-title {
+  color: var(--accent); letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+}
+
+.log-line {
+  color: var(--muted);
+  margin-bottom: 2px;
+  animation: fadeIn 0.3s ease;
+}
+
+.log-line .ts { color: #555; }
+.log-line .ev-type { color: #6b9fff; }
+.log-line .ok { color: #4ade80; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }

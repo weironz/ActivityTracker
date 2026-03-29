@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopTrack · 商城</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/components.css">
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="logo">SHOP<span>TRACK</span></div>
+  <nav>
+    <a href="#">首页</a>
+    <a href="#">商品</a>
+    <a href="#">活动</a>
+  </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+  <h1>发现<em>好物</em><br>每一次点击<br>都更了解你</h1>
+  <div class="hero-sub">
+    KAFKA ACTIVITY TRACKER<br>
+    实时行为追踪演示<br>
+    ──────────────────
+  </div>
+</section>
+
+<!-- Filter and Search Bar -->
+<div class="filter-bar">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" class="search-input" id="search-input" placeholder="搜索商品..."
+           oninput="handleSearch(this.value)" onkeydown="if(event.key==='Enter')performSearch()">
+  </div>
+  <button class="filter-btn active" onclick="filterProducts('all', this)">全部</button>
+  <button class="filter-btn" onclick="filterProducts('数码', this)">数码</button>
+  <button class="filter-btn" onclick="filterProducts('家居', this)">家居</button>
+  <button class="filter-btn" onclick="filterProducts('服饰', this)">服饰</button>
+  <button class="filter-btn" onclick="filterProducts('食品', this)">食品</button>
+</div>
+
+<!-- Product Grid -->
+<div class="grid" id="product-grid"></div>
+
+<!-- Recommendation Panel -->
+<div class="rec-panel" id="rec-panel">
+  <div class="rec-title">▸ 为你推荐</div>
+  <div id="rec-list"><div style="color:var(--muted);font-size:0.8rem">浏览商品后自动生成推荐...</div></div>
+</div>
+<button class="rec-toggle" id="rec-toggle" onclick="toggleRec()">为你推荐</button>
+
+<!-- Toast Notification -->
+<div id="toast"><span class="ev" id="toast-ev"></span> <span id="toast-msg"></span></div>
+
+<!-- Event Log -->
+<div class="event-log">
+  <div class="log-title">▸ KAFKA EVENT STREAM</div>
+  <div id="log-lines"></div>
+</div>
+
+<!-- JavaScript Modules -->
+<script src="scripts/config.js"></script>
+<script src="scripts/api.js"></script>
+<script src="scripts/search.js"></script>
+<script src="scripts/products.js"></script>
+<script src="scripts/recommendations.js"></script>
+<script src="scripts/ui.js"></script>
+
+</body>
+</html>

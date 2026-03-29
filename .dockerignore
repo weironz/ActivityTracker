@@ -1,0 +1,42 @@
+# 环境变量文件 - 敏感信息不应复制到镜像中
+.env
+*.env
+
+# Git
+.git/
+.gitignore
+
+# 文档
+README.md
+*.md
+
+# Python缓存
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# 虚拟环境
+.venv/
+venv/
+ENV/
+backend/.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 日志文件
+*.log
+
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# Docker相关（避免循环引用）
+docker-compose.override.yml

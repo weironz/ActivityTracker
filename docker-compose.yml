@@ -1,0 +1,79 @@
+name: 'activitytracker'
+services:
+  kafka:
+    image: apache/kafka:4.0.2
+    environment:
+      - KAFKA_NODE_ID=1
+      - KAFKA_PROCESS_ROLES=broker,controller
+      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      - KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,CONTROLLER://kafka:9093
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1
+      - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1
+      - KAFKA_LOG_DIRS=/tmp/kraft-combined-logs
+      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
+    ports:
+      - "${KAFKA_PORT:-9092}:9092"
+    networks:
+      - activity_network
+
+  # 前端服务 (Nginx)
+  frontend:
+    build: ./frontend
+    ports:
+      - "${FRONTEND_PORT:-80}:80"
+    environment:
+      - SERVER_NAME=${FRONTEND_SERVER_NAME:-localhost}
+      - BACKEND_HOST=${BACKEND_HOST:-app}
+      - BACKEND_PORT=${BACKEND_PORT:-5000}
+    volumes:
+      - ./frontend/index.html:/usr/share/nginx/html/index.html
+      - ./frontend/styles:/usr/share/nginx/html/styles
+      - ./frontend/scripts:/usr/share/nginx/html/scripts
+    depends_on:
+      - app
+    networks:
+      - activity_network
+
+  # 后端服务
+  app:
+    build: ./backend
+    depends_on:
+      - kafka
+    env_file:
+      - .env
+    ports:
+      - "${FLASK_PORT:-5000}:5000"
+    networks:
+      - activity_network
+
+  consumer:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.consumer
+    depends_on:
+      - kafka
+    env_file:
+      - .env
+    networks:
+      - activity_network
+
+  kafbat-ui:
+    container_name: kafbat-ui
+    image: ghcr.io/kafbat/kafka-ui
+    ports:
+      - "${KAFBAT_UI_PORT:-8080}:8080"
+    environment:
+      DYNAMIC_CONFIG_ENABLED: ${KAFBAT_UI_ENABLED:-true}
+      KAFKA_CLUSTERS_0_NAME: demo1
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: ${KAFKA_BOOTSTRAP:-kafka:9092}
+    networks:
+      - activity_network
+
+networks:
+  activity_network:
+    driver: bridge

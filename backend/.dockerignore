@@ -1,0 +1,29 @@
+# 环境变量文件 - 敏感信息不应复制到镜像中
+.env
+
+# Python缓存
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# 虚拟环境
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 日志文件
+*.log
+
+# Git
+.git/
+.gitignore
